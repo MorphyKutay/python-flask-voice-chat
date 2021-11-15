@@ -1,0 +1,80 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech Assistant</title>
+    <style>
+        body 
+{
+background-image: url(https://i.ytimg.com/vi/BzHMv-lRYss/maxresdefault.jpg);
+}
+        h1 {color: crimson;}
+        .talk{background-color: cyan;
+                border-radius: 20px;}
+        .content{color: cyan;}
+     </style>
+</head>
+<body>
+  <center>
+    <h1>  </h1><br><br>
+    <button class="talk">Talk</button></center>
+    <h3 class="content"></h3>
+    <script>
+        // The JavaScript Part Starts
+        const btn = document.querySelector('.talk');
+        const content = document.querySelector('.content');
+
+     
+        const YouTube = [
+            'ne haber'
+     ];
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition =  new SpeechRecognition();
+
+        recognition.onstart = function(){
+            console.log('Sana Nasıl Yardım Ede bilirim')
+        }
+        recognition.onresult = function (event) {
+            const current = event.resultIndex;
+
+            const transcript = event.results[current][0].transcript;
+            content.textContent = transcript;
+            readOutLoud(transcript);
+
+        };
+
+        btn.addEventListener('click', () =>{
+            recognition.start();
+        });
+
+
+        function readOutLoud(message){
+            const speech = new SpeechSynthesisUtterance();
+
+            speech.text = 'Seni Anlayamadım';
+
+
+            if(message.includes('ne haber')){
+                speech.text = "iyi dayı sen"; 
+                }
+            if(message.includes('İyi ben de takılıyorum')){
+                speech.text = "yav sen dobloyu sattın mı"; 
+                }
+            if(message.includes('Yok ya kaça gider')){
+                speech.text = "dosta gitmez o araç"; 
+                }
+            if(message.includes('bana müşteri bul ya')){
+                speech.text = "bizim amca oğluna söyleyeyim bulur o"; 
+                }
+            if(message.includes('sen kralsın')){
+                speech.text = "eyvallah moruk"; 
+                }
+            speech.volume = 1;
+            speech.rate = 1.1;
+            speech.pitch = 1;
+
+            window.speechSynthesis.speak(speech);
+        }
+    </script>
+</body>
+</html>
